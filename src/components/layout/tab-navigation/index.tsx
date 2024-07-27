@@ -3,9 +3,18 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Colors } from "@/styles/Colors";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useAppNavigation } from "@/src/navigation/app-navigation";
+import { AppStackParamList } from "@/src/@types/routes";
+import { useRoute } from "@react-navigation/native";
 
 export function TabNavigation() {
+  const route = useRoute();
   const appNavigation = useAppNavigation();
+
+  const handleGoScreen = (screen: keyof AppStackParamList) => {
+    if (route.name !== screen) {
+      appNavigation.push(screen);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -17,15 +26,13 @@ export function TabNavigation() {
             color={Colors.light.veryLightGreen}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => handleGoScreen("HomeScreen")}
+        >
           <FontAwesome name="home" size={35} color={Colors.light.darkGreen} />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            appNavigation.push("HomeScreen");
-          }}
-          style={styles.actionButton}
-        >
+        <TouchableOpacity style={styles.actionButton}>
           <FontAwesome
             name="gear"
             size={35}
