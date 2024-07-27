@@ -5,7 +5,9 @@ import {
   OpenSans_700Bold,
 } from "@expo-google-fonts/open-sans";
 import { useFonts } from "expo-font";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import { Text } from "../text";
 
 export function Card() {
   const [loaded, error] = useFonts({
@@ -21,16 +23,7 @@ export function Card() {
   return (
     <View style={styles.container}>
       <View style={styles.cardNumberContainer}>
-        <Text
-          style={[
-            styles.cardNumber,
-            {
-              fontFamily: "OpenSans_700Bold",
-            },
-          ]}
-        >
-          0000 0000 0000 0000
-        </Text>
+        <Text style={styles.cardNumber}>0000 0000 0000 0000</Text>
       </View>
       <View style={styles.cardNameContainer}>
         <Text style={styles.cardName}>Lorena K L Martins</Text>
