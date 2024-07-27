@@ -12,7 +12,7 @@ const ITEMS_PER_COLUMN = 3;
 
 const splitItemsIntoColumns = (
   items: FastActionType[],
-  itemsPerColumn: number
+  itemsPerColumn: number,
 ) => {
   const columns = [];
   for (let i = 0; i < items.length; i += itemsPerColumn) {
@@ -29,7 +29,7 @@ export function HomeScreen() {
       id: `${columnIndex}-${itemIndex}`,
       columnIndex,
       ...item,
-    }))
+    })),
   );
 
   const renderItem: ListRenderItem<FastActionType> = ({ item, index }) => (
