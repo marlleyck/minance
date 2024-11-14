@@ -7,29 +7,19 @@ import { Card } from "@/src/components/layout/card";
 import { FastActionButton } from "@/src/components/layout/fast-action-button";
 import { fastActionsMock } from "@/src/constants/mocks/fast-actions-mock";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const ITEMS_PER_COLUMN = 3;
-
-const splitItemsIntoColumns = (
-  items: FastActionType[],
-  itemsPerColumn: number,
-) => {
-  const columns = [];
-  for (let i = 0; i < items.length; i += itemsPerColumn) {
-    columns.push(items.slice(i, i + itemsPerColumn));
-  }
-  return columns;
-};
-
-const columns = splitItemsIntoColumns(fastActionsMock, ITEMS_PER_COLUMN);
+import { splitItemsIntoColumns } from "@/src/utils/split-items-into-columns";
 
 export function HomeScreen() {
-  const data = columns.flatMap((column, columnIndex) =>
+  const ITEMS_PER_COLUMN = 3;
+
+  const columns = splitItemsIntoColumns(fastActionsMock, ITEMS_PER_COLUMN);
+
+  const fastActions = columns.flatMap((column, columnIndex) =>
     column.map((item, itemIndex) => ({
       id: `${columnIndex}-${itemIndex}`,
       columnIndex,
       ...item,
-    })),
+    }))
   );
 
   const renderItem: ListRenderItem<FastActionType> = ({ item, index }) => (
@@ -50,7 +40,7 @@ export function HomeScreen() {
         <View style={styles.fastActionContainer}>
           <View style={styles.fastActionContent}>
             <FlatList
-              data={data}
+              data={fastActions}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
               numColumns={ITEMS_PER_COLUMN}
