@@ -8,6 +8,7 @@ import { FastActionButton } from "@/src/components/layout/fast-action-button";
 import { fastActionsMock } from "@/src/constants/mocks/fast-actions-mock";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { splitItemsIntoColumns } from "@/src/utils/split-items-into-columns";
+import { Text } from "@/src/components/layout/text";
 
 export function HomeScreen() {
   const ITEMS_PER_COLUMN = 3;
@@ -34,7 +35,8 @@ export function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cardContent}>
-        <Card />
+        {/* <Card /> */}
+        <Text>$2000</Text>
       </View>
       <View style={styles.actionsContainer}>
         <View style={styles.fastActionContainer}>

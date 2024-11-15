@@ -1,14 +1,16 @@
 export const Colors = {
   light: {
-    base: "#8FAE8D", // Cor Base
-    darkGreen: "#6E8D6B", // Verde Escuro
-    lightGreen: "#AFCFAD", // Verde Claro
-    blue: "#3B6B8A", // Azul
-    orange: "#F4A261", // Laranja
-    darkGray: "#4A4A4A", // Cinza Escuro
-    lightGray: "#E5E5E5", // Cinza Claro
-    white: "#FFFFFF", // Branco
-    veryLightGray: "#F5F5F5", // Cinza Muito Claro
+    base: "#2D55A0",
+    darkBlue: "#233C65",
+    lightBlue: "#2D55A0",
+    lightGreen: "#8BC49E",
+    blue: "#3B6B8A",
+    orange: "#F4A261",
+    darkGray: "#4A4A4A",
+    lightGray: "#E5E5E5",
+    white: "#FFFFFF",
+    veryLightGray: "#F5F5F5",
+    veryLightBlue: "#B5C7E0",
     veryLightGreen: "#BAC8B5",
     bgGrayDark: "#D9D9D9",
     bgGrayLight: "#EDEDED",

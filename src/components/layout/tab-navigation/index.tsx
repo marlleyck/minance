@@ -23,20 +23,20 @@ export function TabNavigation() {
           <FontAwesome5
             name="wallet"
             size={30}
-            color={Colors.light.veryLightGreen}
+            color={Colors.light.veryLightBlue}
           />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => handleGoScreen("HomeScreen")}
         >
-          <FontAwesome name="home" size={35} color={Colors.light.darkGreen} />
+          <FontAwesome name="home" size={35} color={Colors.light.lightBlue} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
           <FontAwesome
             name="gear"
             size={35}
-            color={Colors.light.veryLightGreen}
+            color={Colors.light.veryLightBlue}
           />
         </TouchableOpacity>
       </View>
