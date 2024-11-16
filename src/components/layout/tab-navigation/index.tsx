@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { Colors } from "@/styles/Colors";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { useAppNavigation } from "@/src/navigation/app-navigation";
+import { useAppNavigation } from "@/src/navigation/app/app-navigation";
 import { AppStackParamList } from "@/src/@types/routes";
 import { useRoute } from "@react-navigation/native";
 

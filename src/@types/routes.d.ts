@@ -9,7 +9,9 @@ type RootStackParamsList = {
   App: { screen: keyof TabNavigationStackParamsList };
 };
 
-type AuthStackParamList = {};
+type AuthStackParamList = {
+  LoginScreen: undefined;
+};
 
 type AppStackParamList = {
   HomeScreen: undefined;
