@@ -7,12 +7,16 @@ import { FastActionButton } from "@/src/components/layout/fast-action-button";
 import { fastActionsMock } from "@/src/constants/mocks/fast-actions-mock";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "@/src/components/layout/text";
+import { getAllExpenses } from "@/src/api/expenses/service";
+import { transformDate } from "@/src/utils/transform-date";
 
 export function HomeScreen() {
+  const { expenses } = getAllExpenses();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.expenseContent}>
-        <Text style={styles.expenseText}>$2,589.50</Text>
+        <Text style={styles.expenseText}>${expenses?.total}</Text>
         <Text style={styles.expenseSubtitle}>Despesas do Mês</Text>
       </View>
       <View style={styles.fastActionContainer}>
@@ -46,29 +50,32 @@ export function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.transactionsContent}>
+        <View style={styles.transactionsHeader}>
           <Text style={styles.transactionsTitle}>HOJE</Text>
-          <View style={styles.transactionList}>
-            <View style={styles.transactionItem}>
-              <View style={styles.transactionDetails}>
-                <Text style={styles.transactionName}>Ifood</Text>
-              </View>
-              <View style={styles.transactionAmount}>
-                <Text style={styles.transactionValue}>-$50.00</Text>
-                <Text style={styles.transactionDate}>Aug 26</Text>
-              </View>
-            </View>
-            <View style={styles.transactionItem}>
-              <View style={styles.transactionDetails}>
-                <Text style={styles.transactionName}>Ifood</Text>
-              </View>
-              <View style={styles.transactionAmount}>
-                <Text style={styles.transactionValue}>-$50.00</Text>
-                <Text style={styles.transactionDate}>Aug 26</Text>
-              </View>
-            </View>
-          </View>
         </View>
+
+        <ScrollView
+          style={styles.transactionsContent}
+          contentContainerStyle={styles.transactionsScrollContent}
+        >
+          <View style={styles.transactionList}>
+            {expenses?.expenses?.map((expense) => (
+              <View key={expense.id} style={styles.transactionItem}>
+                <View style={styles.transactionDetails}>
+                  <Text style={styles.transactionName}>
+                    {expense.description}
+                  </Text>
+                </View>
+                <View style={styles.transactionAmount}>
+                  <Text style={styles.transactionValue}>-${expense.value}</Text>
+                  <Text style={styles.transactionDate}>
+                    {transformDate(expense.paymentDate)}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
       </View>
       <View style={styles.tabNavigationContainer}>
         <TabNavigation />
@@ -129,9 +136,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
   },
+  transactionsHeader: {
+    marginTop: 16,
+  },
   transactionsContent: {
     width: "100%",
     marginTop: 16,
+  },
+  transactionsScrollContent: {
+    paddingBottom: 70,
   },
   transactionsTitle: {
     color: Colors.light.bgGrayDark,
@@ -139,7 +152,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   transactionList: {
-    marginTop: 16,
     gap: 8,
   },
   transactionItem: {
