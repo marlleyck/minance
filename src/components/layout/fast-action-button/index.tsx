@@ -1,6 +1,7 @@
 import { Colors } from "@/styles/Colors";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text } from "../text";
 
 interface FastActionProps {
   iconName: string;
@@ -20,23 +21,30 @@ export function FastActionButton({
           <FontAwesome6 name={iconName} size={iconSize} />
         </View>
       </TouchableOpacity>
-      <Text>{title}</Text>
+      <Text style={[styles.text, { color: Colors.light.veryLightBlue }]}>
+        {title}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: 80,
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
   },
   content: {
-    backgroundColor: Colors.light.bgGrayLight,
+    backgroundColor: Colors.light.bgBlueLight,
     width: 62,
     height: 62,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 16,
+  },
+  text: {
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

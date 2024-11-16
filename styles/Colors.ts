@@ -14,6 +14,8 @@ export const Colors = {
     veryLightGreen: "#BAC8B5",
     bgGrayDark: "#D9D9D9",
     bgGrayLight: "#EDEDED",
+    bgBlueLight: "#F6F8FC",
+    red: "#E63946",
   },
   dark: {},
 };
