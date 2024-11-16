@@ -26,3 +26,8 @@ type AppScreenProps<T extends RouteNamesApp> = NativeStackScreenProps<
   AppStackParamList,
   T
 >;
+
+type RootNavigationProp = CompositeNavigationProp<
+  AuthNavigationProp,
+  AppNavigationProp
+>;
