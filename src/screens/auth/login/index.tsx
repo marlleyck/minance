@@ -23,7 +23,11 @@ type FormValues = {
 
 export function LoginScreen() {
   const { login } = useLogin();
-  const { control, handleSubmit } = useForm<FormValues>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -49,28 +53,33 @@ export function LoginScreen() {
           <View style={styles.form}>
             <Controller
               control={control}
-              rules={{ required: true }}
+              rules={{ required: "O email é obrigatório." }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="Email"
-                  placeholderTextColor="white"
-                  keyboardType="email-address"
-                  onBlur={() => {
-                    onBlur();
-                    setEmailFocused(false);
-                  }}
-                  onFocus={() => setEmailFocused(true)}
-                  onChangeText={onChange}
-                  value={value}
-                  style={[styles.input, emailFocused && styles.inputFocused]}
-                />
+                <>
+                  <TextInput
+                    placeholder="Email"
+                    placeholderTextColor="white"
+                    keyboardType="email-address"
+                    onBlur={() => {
+                      onBlur();
+                      setEmailFocused(false);
+                    }}
+                    onFocus={() => setEmailFocused(true)}
+                    onChangeText={onChange}
+                    value={value}
+                    style={[styles.input, emailFocused && styles.inputFocused]}
+                  />
+                  {errors.email && (
+                    <Text style={styles.errorText}>{errors.email.message}</Text>
+                  )}
+                </>
               )}
               name="email"
             />
 
             <Controller
               control={control}
-              rules={{ required: true }}
+              rules={{ required: "A senha é obrigatória." }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <>
                   <TextInput
@@ -89,6 +98,11 @@ export function LoginScreen() {
                       passwordFocused && styles.inputFocused,
                     ]}
                   />
+                  {errors.password && (
+                    <Text style={styles.errorText}>
+                      {errors.password.message}
+                    </Text>
+                  )}
                   <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
                 </>
               )}
@@ -190,6 +204,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginTop: 4,
+  },
+  buttonDisabled: {
+    backgroundColor: "#B0B0B0",
+    opacity: 0.6,
   },
   footer: {
     marginTop: 20,
