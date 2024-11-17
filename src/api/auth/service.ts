@@ -7,9 +7,18 @@ import { useEffect } from "react";
 import { authApi } from "./api";
 import { AppDispatch } from "@/src/app/store";
 import { RootNavigationProp } from "@/src/@types/routes";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function getTokenFromStorage(): Promise<string | null> {
   return await AsyncStorage.getItem(AppStorageKeys.token);
+}
+
+async function saveItemToStorage(key: string, value: string) {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (error) {
+    //
+  }
 }
 
 async function authenticateUser(
@@ -17,12 +26,13 @@ async function authenticateUser(
   dispatch: AppDispatch,
   rootNavigation: RootNavigationProp
 ) {
+  console.log("tokenStorage", tokenStorage);
   if (tokenStorage) {
     try {
+      authApi.updateToken(tokenStorage);
+
       const result = await authApi.getUserInfo();
       const user = result?.data;
-
-      authApi.updateToken(tokenStorage);
 
       dispatch(authActions.setUser(user));
 
@@ -40,7 +50,6 @@ async function authenticateUser(
 export function useAuthentication() {
   const dispatch = useAppDispatch();
   const rootNavigation = useRootNavigation();
-  const { token } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchTokenAndAuthenticate = async () => {
@@ -53,7 +62,42 @@ export function useAuthentication() {
   }, [dispatch, rootNavigation]);
 
   return {
-    execute: () => authenticateUser(token, dispatch, rootNavigation),
+    execute: async () => {
+      const tokenStorage = await getTokenFromStorage();
+      authenticateUser(tokenStorage, dispatch, rootNavigation);
+    },
+  };
+}
+
+export function useLogin() {
+  const queryClient = useQueryClient();
+
+  const dispatch = useAppDispatch();
+  const rootNavigation = useRootNavigation();
+
+  async function execute(data: any) {
+    const result = await authApi.login(data.email, data.password);
+    return result.data;
+  }
+
+  const mutation = useMutation({
+    mutationFn: execute,
+    onSuccess: (data) => {
+      dispatch(authActions.setToken(data.token));
+      authApi.updateToken(data.token);
+      dispatch(authActions.setUser(data.user));
+      saveItemToStorage(AppStorageKeys.token, data.token);
+
+      rootNavigation.replace("App", { screen: "HomeScreen" });
+    },
+  });
+
+  function login(data: any) {
+    mutation.mutate(data);
+  }
+
+  return {
+    login,
   };
 }
 

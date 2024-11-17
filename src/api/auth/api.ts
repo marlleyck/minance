@@ -3,7 +3,18 @@ import { httpClient } from "../httpClient";
 
 async function getUserInfo() {
   const response = await httpClient.get<User>("/user");
-  console.log("cosole:", response.data);
+  return response;
+}
+
+async function login(email: string, password: string) {
+  const response = await httpClient.post<{ token: string; user: User }>(
+    "/auth/login",
+    {
+      email,
+      password,
+    }
+  );
+
   return response;
 }
 
@@ -19,4 +30,5 @@ export const authApi = {
   getUserInfo,
   updateToken,
   removeToken,
+  login,
 };
